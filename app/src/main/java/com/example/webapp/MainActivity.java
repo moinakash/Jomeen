@@ -106,19 +106,25 @@ public class MainActivity extends AppCompatActivity {
 
                 linearLayout.setVisibility(View.GONE);
 
+//                hud = KProgressHUD.create(MainActivity.this)
+//                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+//                        .setLabel("Please wait")
+//                        .setCancellable(new DialogInterface.OnCancelListener()
+//                        {
+//                            @Override public void onCancel(DialogInterface
+//                                                                   dialogInterface)
+//                            {
+//                                Toast.makeText(MainActivity.this, "You " +
+//                                        "cancelled manually!", Toast
+//                                        .LENGTH_SHORT).show();
+//                            }
+//                        });
+
+
                 hud = KProgressHUD.create(MainActivity.this)
                         .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                        .setLabel("Please wait")
-                        .setCancellable(new DialogInterface.OnCancelListener()
-                        {
-                            @Override public void onCancel(DialogInterface
-                                                                   dialogInterface)
-                            {
-                                Toast.makeText(MainActivity.this, "You " +
-                                        "cancelled manually!", Toast
-                                        .LENGTH_SHORT).show();
-                            }
-                        });
+                        .setWindowColor(getResources().getColor(R.color.loadcolor))
+                        .setDimAmount(0.5f);
 
                 hud.show();
             }
