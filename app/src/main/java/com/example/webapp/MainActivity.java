@@ -10,9 +10,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -24,10 +27,11 @@ public class MainActivity extends AppCompatActivity {
     WebView webView;
 
     Activity activity ;
-    private ProgressDialog progDailog;
+
 
     private KProgressHUD hud;
     LinearLayout linearLayout;
+    ImageView imageView;
 
 
     private class HelloWebViewClient extends WebViewClient {
@@ -45,34 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
         webView =(WebView)findViewById(R.id.webView1);
         linearLayout = findViewById(R.id.idLinearlayout);
+        imageView = findViewById(R.id.idImageView);
 
 
-        splashDismiss();
-
-
-        ///////////////////////////////////////////////
 
         activity = this;
 
-//        progDailog = ProgressDialog.show(activity, "Loading","Please wait...", true);
-//        progDailog.setCancelable(false);
-
-
-        hud = KProgressHUD.create(MainActivity.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait")
-                .setCancellable(new DialogInterface.OnCancelListener()
-                {
-                    @Override public void onCancel(DialogInterface
-                                                           dialogInterface)
-                    {
-                        Toast.makeText(MainActivity.this, "You " +
-                                "cancelled manually!", Toast
-                                .LENGTH_SHORT).show();
-                    }
-                });
-
-        hud.show();
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim);
+        imageView.startAnimation(animation);
 
 
 
@@ -97,40 +81,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        webView.loadUrl("https://google.com");
+
         webView.loadUrl("http://jomeen.com/");
+        splashDismiss();
 
 
-
-
-        //////////////////////////////////////////////////////////
-//        webView.getSettings().setJavaScriptEnabled(true);
-//        webView.getSettings().setLoadWithOverviewMode(true);
-//        webView.getSettings().setUseWideViewPort(true);
-//        webView.getSettings().setBuiltInZoomControls(true);
-//        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-////        wb.getSettings().setPluginsEnabled(true);
-//
-//        if (Build.VERSION.SDK_INT < 8) {
-//            webView.getSettings().setPluginsEnabled(true);
-//        } else {
-//            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-//        }
-//
-//
-//        webView.setWebViewClient(new HelloWebViewClient());
-////        wb.setWebViewClient(new WebViewClient() {
-////            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-////                wb.loadUrl("file:///android_asset/myerrorpage.html");
-////
-////            }
-////        });
-//
-//
-//
-//        webView.loadUrl("http://jomeen.com");
-//
-////        wb.loadUrl("https://www.google.com");
     }
 
     private void scheduleDismiss() {
@@ -140,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 hud.dismiss();
             }
-        }, 2000);
+        }, 1000);
     }
 
     private void splashDismiss() {
@@ -150,8 +105,24 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 linearLayout.setVisibility(View.GONE);
+
+                hud = KProgressHUD.create(MainActivity.this)
+                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                        .setLabel("Please wait")
+                        .setCancellable(new DialogInterface.OnCancelListener()
+                        {
+                            @Override public void onCancel(DialogInterface
+                                                                   dialogInterface)
+                            {
+                                Toast.makeText(MainActivity.this, "You " +
+                                        "cancelled manually!", Toast
+                                        .LENGTH_SHORT).show();
+                            }
+                        });
+
+                hud.show();
             }
-        }, 2000);
+        }, 3000);
     }
 
     @Override
@@ -161,8 +132,6 @@ public class MainActivity extends AppCompatActivity {
             webView.goBack();
             return true;
         }
-        // If it wasn't the Back key or there's no web page history, bubble up to the default
-        // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event);
     }
 }

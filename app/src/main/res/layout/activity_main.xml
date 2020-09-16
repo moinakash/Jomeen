@@ -16,6 +16,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/idImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -25,6 +26,7 @@
 
     <WebView
         android:id="@+id/webView1"
+        android:background="#D7EDD7"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center" />
