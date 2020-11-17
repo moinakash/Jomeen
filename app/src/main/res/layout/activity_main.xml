@@ -24,11 +24,22 @@
 
     </LinearLayout>
 
-    <WebView
-        android:id="@+id/webView1"
-        android:background="#D7EDD7"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <WebView
+            android:id="@+id/webView1"
+            android:background="#D7EDD7"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center" />
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
 </LinearLayout>

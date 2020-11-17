@@ -2,6 +2,7 @@ package com.example.webapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     ImageView imageView;
 
+    SwipeRefreshLayout mySwipeRefreshLayout;
+
 
 
 
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         webView =(WebView)findViewById(R.id.webView1);
         linearLayout = findViewById(R.id.idLinearlayout);
         imageView = findViewById(R.id.idImageView);
+        mySwipeRefreshLayout = findViewById(R.id.swipeContainer);
 
 
 
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(!isNetworkAvailable(this)) {
-            
+
             showAlertDialog();
         }
         else {
@@ -96,6 +100,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        webView.reload();
+                        mySwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
 
 
 
