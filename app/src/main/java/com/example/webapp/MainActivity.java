@@ -1,10 +1,14 @@
 package com.example.webapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,12 +38,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
 
 
-    private class HelloWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            return false;
-        }
-    }
+
 
 
     @Override
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //                progDailog.show();
-                hud.show();
+                //hud.show();
 
                 view.loadUrl(url);
 
@@ -77,13 +76,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, final String url) {
 //                progDailog.dismiss();
-                scheduleDismiss();
+                //scheduleDismiss();
             }
         });
 
 
+
+
+
+        if(!isNetworkAvailable(this)) {
+            
+            showAlertDialog();
+        }
+        else {
+            splashDismiss();
+        }
         webView.loadUrl("http://jomeen.com/");
-        splashDismiss();
+//        webView.loadUrl("https://www.kalerkantho.com/");
+
+
+
+
 
 
     }
@@ -126,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                         .setWindowColor(getResources().getColor(R.color.loadcolor))
                         .setDimAmount(0.5f);
 
-                hud.show();
+                //hud.show();
             }
         }, 3000);
     }
@@ -139,5 +152,38 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(conMan.getActiveNetworkInfo() != null && conMan.getActiveNetworkInfo().isConnected())
+            return true;
+        else
+            return false;
+    }
+
+
+    public void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Information")
+                .setMessage("This is a Dialog")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        reload();
+
+                    }
+                });
+        builder.show();
+    }
+
+    public void reload() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
 }
