@@ -178,9 +178,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Information")
-                .setMessage("This is a Dialog")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+        builder.setTitle("No Internet Connection")
+                .setMessage("Please connect your internet")
+                .setIcon(R.drawable.splogo)
+                .setPositiveButton("retry", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
