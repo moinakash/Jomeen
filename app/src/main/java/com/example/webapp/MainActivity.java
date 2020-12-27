@@ -5,19 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -66,12 +63,14 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
+        //hud.show();
+
         webView.setWebViewClient(new WebViewClient(){
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //                progDailog.show();
-                //hud.show();
+                hud.show();
 
                 view.loadUrl(url);
 
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, final String url) {
 //                progDailog.dismiss();
-                //scheduleDismiss();
+                scheduleDismiss();
             }
         });
 
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(!isNetworkAvailable(this)) {
 
-            showAlertDialog();
+            NoInternetAlertDialog();
         }
         else {
             splashDismiss();
@@ -132,19 +131,19 @@ public class MainActivity extends AppCompatActivity {
 
                 linearLayout.setVisibility(View.GONE);
 
-//                hud = KProgressHUD.create(MainActivity.this)
-//                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-//                        .setLabel("Please wait")
-//                        .setCancellable(new DialogInterface.OnCancelListener()
-//                        {
-//                            @Override public void onCancel(DialogInterface
-//                                                                   dialogInterface)
-//                            {
-//                                Toast.makeText(MainActivity.this, "You " +
-//                                        "cancelled manually!", Toast
-//                                        .LENGTH_SHORT).show();
-//                            }
-//                        });
+                hud = KProgressHUD.create(MainActivity.this)
+                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                        .setLabel("Please wait")
+                        .setCancellable(new DialogInterface.OnCancelListener()
+                        {
+                            @Override public void onCancel(DialogInterface
+                                                                   dialogInterface)
+                            {
+                                Toast.makeText(MainActivity.this, "You " +
+                                        "cancelled manually!", Toast
+                                        .LENGTH_SHORT).show();
+                            }
+                        });
 
 
                 hud = KProgressHUD.create(MainActivity.this)
@@ -176,11 +175,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void showAlertDialog() {
+    public void NoInternetAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("No Internet Connection")
                 .setMessage("Please connect your internet")
-                .setIcon(R.drawable.splogo)
+                .setIcon(R.drawable.no_internet_icon)
                 .setPositiveButton("retry", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -191,6 +190,32 @@ public class MainActivity extends AppCompatActivity {
                 });
         builder.show();
     }
+
+    public void ExitAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Do to want to close this App?")
+               // .setMessage("Please connect your internet")
+              //  .setIcon(R.drawable.no_internet_icon)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        finish();
+
+                    }
+                }).setPositiveButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+               dialogInterface.dismiss();
+
+            }
+        });;
+
+        builder.show();
+    }
+
+
 
     public void reload() {
         Intent intent = getIntent();
