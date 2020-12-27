@@ -1,4 +1,4 @@
-package com.example.webapp;
+package com.rdtl.jomeen;
 
 import org.junit.Test;
 

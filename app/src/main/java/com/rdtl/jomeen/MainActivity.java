@@ -1,4 +1,4 @@
-package com.example.webapp;
+package com.rdtl.jomeen;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
 
                     }
-                }).setPositiveButton("No", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
