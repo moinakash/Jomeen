@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +61,13 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
-        //hud.show();
+
 
         webView.setWebViewClient(new WebViewClient(){
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                progDailog.show();
+
                 hud.show();
 
                 view.loadUrl(url);
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onPageFinished(WebView view, final String url) {
-//                progDailog.dismiss();
+
                 scheduleDismiss();
             }
         });
@@ -95,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             splashDismiss();
         }
         webView.loadUrl("http://jomeen.com/");
-//        webView.loadUrl("https://www.kalerkantho.com/");
+
 
 
 
@@ -118,7 +116,14 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                hud.dismiss();
+                try {
+
+                    hud.dismiss();
+
+                }catch (Exception e){
+
+                }
+
             }
         }, 1000);
     }
@@ -151,7 +156,13 @@ public class MainActivity extends AppCompatActivity {
                         .setWindowColor(getResources().getColor(R.color.loadcolor))
                         .setDimAmount(0.5f);
 
-                //hud.show();
+
+
+                if(isNetworkAvailable(activity)) {
+
+                    hud.show();
+                }
+
             }
         }, 3000);
     }
@@ -191,11 +202,31 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+
+
+
+
+    public void reload() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        ExitAlertDialog();
+
+    }
+
     public void ExitAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Do to want to close this App?")
-               // .setMessage("Please connect your internet")
-              //  .setIcon(R.drawable.no_internet_icon)
+                // .setMessage("Please connect your internet")
+                //  .setIcon(R.drawable.no_internet_icon)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -207,22 +238,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-               dialogInterface.dismiss();
+                dialogInterface.dismiss();
 
             }
         });;
 
         builder.show();
-    }
-
-
-
-    public void reload() {
-        Intent intent = getIntent();
-        overridePendingTransition(0, 0);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(intent);
     }
 }
