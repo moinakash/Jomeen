@@ -72,17 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
                 view.loadUrl(url);
 
-                if(!isNetworkAvailable(activity)) {
-
-                    NoInternetAlertDialog();
-
-                    String uu = webView.getUrl();
-                    Toast.makeText(activity, ""+uu, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    view.loadUrl(url);
-                }
-
                 return true;
             }
             @Override
