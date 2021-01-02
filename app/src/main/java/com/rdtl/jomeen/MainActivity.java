@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
     public void NoInternetAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("No Internet Connection")
+                .setCancelable(false)
                 .setMessage("Please connect your internet")
                 .setIcon(R.drawable.no_internet_icon)
                 .setPositiveButton("retry", new DialogInterface.OnClickListener() {
@@ -199,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+
         builder.show();
     }
 
