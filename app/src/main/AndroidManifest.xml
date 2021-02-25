@@ -11,9 +11,9 @@
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
-        android:icon="@mipmap/jomeen_sq"
+        android:icon="@mipmap/jomeen_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/jomeen_sq"
+        android:roundIcon="@mipmap/jomeen_app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/SpTheme">
         <activity android:theme="@style/AppTheme" android:name="com.rdtl.jomeen.MainActivity">
